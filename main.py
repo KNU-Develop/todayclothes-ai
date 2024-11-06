@@ -37,9 +37,9 @@ def recommend_outfit(user_data: UserData):
         user_data.gender,
         user_data.activity_style,
         user_data.activity_type,
-        f"온도 {user_data.weather['temperature']}도",
-        f"체감온도 {user_data.weather['feels_like']}도",
-        f"바람 {user_data.weather['wind_speed']}m/s",
+        f"온도 {user_data.weather.temperature}도",
+        f"체감온도 {user_data.weather.feels_like}도",
+        f"바람 {user_data.weather.wind_speed}m/s",
         user_data.time,
         user_data.location
     ]
@@ -121,11 +121,11 @@ def recommend_outfit(user_data: UserData):
             gender=user_data.gender,
             activity_style=user_data.activity_style,
             activity_type=user_data.activity_type,
-            temperature=user_data.weather["temperature"],
-            feels_like=user_data.weather["feels_like"],
-            precipitation_chance=user_data.weather["precipitation_chance"],
-            humidity=user_data.weather["humidity"],
-            wind_speed=user_data.weather["wind_speed"],
+            temperature=user_data.weather.temperature,
+            feels_like=user_data.weather.feels_like,
+            precipitation_chance=user_data.weather.precipitation_chance,
+            humidity=user_data.weather.humidity,
+            wind_speed=user_data.weather.wind_speed,
             time=user_data.time,
             location=user_data.location,
             retrieved_items=retrieved_items,
@@ -142,7 +142,7 @@ def recommend_outfit(user_data: UserData):
     try:
         import json
         result = json.loads(response)
-        feels_like_temp = user_data.weather['feels_like']
+        feels_like_temp = user_data.weather.feels_like
         
         if feels_like_temp > 21:
             result['OUTER'] = None
