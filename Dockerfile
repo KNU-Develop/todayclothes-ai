@@ -14,8 +14,5 @@ COPY . .
 # 필요한 포트를 공개합니다.
 EXPOSE 8000
 
-# 환경 변수를 설정합니다.
-ENV OPENAI_API_KEY=${OPENAI_API_KEY}
-
 # 애플리케이션을 실행합니다.
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
