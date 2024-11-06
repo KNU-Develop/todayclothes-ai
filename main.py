@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from models import JSONRetrievalChain
 import uvicorn
 
@@ -11,13 +11,23 @@ rag_retriever = rag.retriever
 model = rag.model
 
 # 사용자 입력 데이터 모델 정의
+# Weather 정보를 담는 WeatherData 모델 정의
+class WeatherData(BaseModel):
+    temperature: int = Field(..., description="온도 (℃)")
+    feels_like: int = Field(..., description="체감 온도 (℃)")
+    precipitation_chance: int = Field(..., description="강수 확률 (%)")
+    humidity: int = Field(..., description="습도 (%)")
+    wind_speed: int = Field(..., description="풍속 (m/s)")
+
+# 전체 사용자 데이터를 담는 UserData 모델 정의
 class UserData(BaseModel):
-    weather: dict
-    time: str
-    location: str
-    activity_type: str
-    gender: str
-    activity_style: str
+    weather: WeatherData
+    time: str = Field(..., description="시간 (HH:MM 형식)")
+    location: str = Field(..., description="위치 정보")
+    activity_type: str = Field(..., description="활동 타입 (예: 실내, 야외)")
+    gender: str = Field(..., description="성별")
+    activity_style: str = Field(..., description="활동 스타일 (예: 비즈니스, 캐주얼 등)")
+
 
 # 추천 API 엔드포인트
 @app.post("/recommend")
